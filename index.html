@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
   <!-- Theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dolphin.css">
+  <link id="docsify-theme" rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
 
   <style>
     .sidebar {
@@ -17,9 +17,81 @@
     .app-name-link img {
       width: 80%;
     }
+
+    /* Theme switcher button */
+    .theme-switcher {
+      position: fixed;
+      top: 20px;
+      right: 80px;
+      z-index: 1000;
+      padding: 8px 12px;
+      background: #42b983;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .theme-switcher:hover {
+      background: #33a06f;
+    }
+
+    .theme-switcher.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .theme-menu {
+      position: fixed;
+      top: 60px;
+      right: 80px;
+      z-index: 1000;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      display: none;
+      min-width: 150px;
+    }
+
+    .theme-menu.active {
+      display: block;
+    }
+
+    .theme-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+
+    .theme-option:last-child {
+      border-bottom: none;
+    }
+
+    .theme-option:hover {
+      background: #f5f5f5;
+    }
+
+    .theme-option.selected {
+      background: #e8f5e9;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+  <!-- Theme switcher button -->
+  <button class="theme-switcher" id="themeSwitcher">Theme</button>
+  <div class="theme-menu" id="themeMenu">
+    <div class="theme-option" data-theme="dolphin">Dolphin</div>
+    <div class="theme-option" data-theme="vue">Vue</div>
+    <div class="theme-option" data-theme="buble">Buble</div>
+    <div class="theme-option" data-theme="dark">Dark</div>
+    <div class="theme-option" data-theme="pure">Pure</div>
+  </div>
+
   <div id="app">Loading...</div>
 
   <script>
@@ -113,6 +185,75 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
+
+    // Hide/show theme button on scroll
+    var themeSwitcher = document.getElementById('themeSwitcher');
+    var themeMenuScroll = document.getElementById('themeMenu');
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 100) {
+        themeSwitcher.classList.add('hidden');
+        themeMenuScroll.classList.remove('active');
+      } else {
+        themeSwitcher.classList.remove('hidden');
+      }
+    });
+
+    // Theme switcher functionality
+    (function() {
+      var themeMenu = document.getElementById('themeMenu');
+      var themeOptions = document.querySelectorAll('.theme-option');
+      var themeLink = document.getElementById('docsify-theme');
+
+      var themes = {
+        'dolphin': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dolphin.css',
+        'vue': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css',
+        'buble': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/buble.css',
+        'dark': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css',
+        'pure': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/pure.css'
+      };
+
+      // Load saved theme or default to vue
+      var savedTheme = localStorage.getItem('docsify-theme') || 'vue';
+      setTheme(savedTheme);
+
+      // Toggle theme menu
+      themeSwitcher.addEventListener('click', function(e) {
+        e.stopPropagation();
+        themeMenu.classList.toggle('active');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function() {
+        themeMenu.classList.remove('active');
+      });
+
+      // Prevent menu from closing when clicking inside
+      themeMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+
+      // Handle theme selection
+      themeOptions.forEach(function(option) {
+        option.addEventListener('click', function() {
+          var theme = this.getAttribute('data-theme');
+          setTheme(theme);
+          localStorage.setItem('docsify-theme', theme);
+          themeMenu.classList.remove('active');
+        });
+      });
+
+      function setTheme(theme) {
+        themeLink.href = themes[theme];
+
+        // Update selected state
+        themeOptions.forEach(function(option) {
+          option.classList.remove('selected');
+          if (option.getAttribute('data-theme') === theme) {
+            option.classList.add('selected');
+          }
+        });
+      }
+    })();
   </script>
 </body>
 </html>

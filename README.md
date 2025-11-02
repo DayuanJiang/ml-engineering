@@ -1,5 +1,7 @@
 # Machine Learning Engineering Open Book
 
+> **Note:** This book is also hosted as a GitHub Pages site at: https://dayuanjiang.github.io/ml-engineering/#/
+
 This is an open collection of methodologies, tools and step by step instructions to help with successful training and fine-tuning of large language models and multi-modal models and their inference.
 
 This is a technical material suitable for LLM/VLM training engineers and operators. That is the content here contains lots of scripts and copy-n-paste commands to enable you to quickly address your needs.
