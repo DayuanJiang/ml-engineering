@@ -75,7 +75,7 @@ $ sudo ifconfig
 
 One interface is typically used by users to connecting to nodes via ssh or for various other non-compute related services - e.g., sending an email or download some data. Often this interface is called `eth0`, with `eth` standing for Ethernet, but it can be called by other names.
 
-Then there is the inter-node interface which can be Infiniband, EFA, OPA, HPE Slingshot, etc. ([more information](../network#inter-node-networking)). There could be one or dozens of those interfaces.
+Then there is the inter-node interface which can be Infiniband, EFA, OPA, HPE Slingshot, etc. ([more information](../network/#inter-node-networking)). There could be one or dozens of those interfaces.
 
 Here are some examples of `ifconfig`'s output:
 
@@ -97,7 +97,7 @@ ib0     Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-0
         inet addr:172.0.0.50  Bcast: 172.0.0.255  Mask:255.255.255.0
         [...]
 ```
-Here `ib` typically tells us it's an InfiniBand card, but really it can be any other vendor. I have seen [OmniPath](../network#omni-path) using `ib` for example. Again `inet` tells us the IP of this interface is `172.0.0.50`.
+Here `ib` typically tells us it's an InfiniBand card, but really it can be any other vendor. I have seen [OmniPath](../network/#omni-path) using `ib` for example. Again `inet` tells us the IP of this interface is `172.0.0.50`.
 
 If you lost me, we want the IP addresses so that we could test if ip:port is open on each node in question.
 

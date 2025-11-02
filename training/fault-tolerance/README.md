@@ -123,7 +123,7 @@ While this method introduces an overhead to the training, having training checkp
 
 There is another approach to dealing with accelerator crashes which involves no checkpoint saving. This approach only works in situations where at least two model replicas are used during training.
 
-Please review the various [model parallelism](../model-parallelism) techniques first to be able to follow along.
+Please review the various [model parallelism](../model-parallelism/) techniques first to be able to follow along.
 
 - If some variation of 3D model parallelism is used, that is you have either Tensor Parallelism (TP) and/or Pipeline Parallelism (PP) and/or Data Parallelism (DP), the number of replicas is equal to the DP degree.
 - If Hybrid ZeRO-DP parallelism is used, then the number of replicas is equal to the degree of hybrid replicas.

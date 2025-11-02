@@ -8,7 +8,7 @@ I can't stress this enough that choosing a bad 3-year contract may prevent your 
 
 In this article I'm not going to tell which clouds to avoid, but instead try to empower you to avoid having a bad experience and to have at least a decent one, that will give your company a chance to succeed.
 
-These notes assume you already know what compute you want for your specific workloads. If you don't please skim through the [Accelerator](../compute/accelerator), [Storage](../storage) and [Network](../network) chapters to know what's available out there. Most of the time you want the latest the clouds have to offer.
+These notes assume you already know what compute you want for your specific workloads. If you don't please skim through the [Accelerator](../compute/accelerator/), [Storage](../storage/) and [Network](../network/) chapters to know what's available out there. Most of the time you want the latest the clouds have to offer.
 
 
 
@@ -205,7 +205,7 @@ In general a typical Python shop needs a filesystem that can deal with:
 
 But, of course, only you know what your workloads' specific requirements are. Also consider the relationship between local storage and remote (shared) storage, as some providers will reduce the size and performance of local drives to save money. In many cases, developers will read data from a shared filesystem that can be cached locally (code libraries, models, datasets). Teaching people how to use [rsync](https://linux.die.net/man/1/rsync) with local NVMe can improve the developer experience, and reduce I/O on the shared filesystem.
 
-Please refer to the notes and guidance in the [Storage chapter](../storage) to know the nuances of storage requirements and their benchmarking.
+Please refer to the notes and guidance in the [Storage chapter](../storage/) to know the nuances of storage requirements and their benchmarking.
 
 ### What happens when storage fails
 
@@ -249,7 +249,7 @@ Having the flexibility to expand your total storage capacity, and keep the "hot"
 
 This segment is mostly relevant to those planning to do training and finetuning. If you need to rent accelerators either for inference via large deployments of microservices or for small, on-demand, interactive work (i.e. notebooks) you can safely ignore this information. The only exception is when you plan on inferencing very big models that require more than one node for a single replica.
 
-In general you want to ensure that the offered [intra-node](../network#intra-node-networking) and [inter-node](../network#intra-node-networking) network speeds match the promise and your expectations.
+In general you want to ensure that the offered [intra-node](../network/#intra-node-networking) and [inter-node](../network/#inter-node-networking) network speeds match the promise and your expectations.
 
 ### Ask for the actual performance numbers
 
@@ -257,7 +257,7 @@ Compute theory never matches reality, and the reality may dramatically vary from
 
 The easiest ask is to request an `all-reduce` benchmark plot over 4-8-16-32-64 nodes (or more if your cluster is more than 64 nodes). You'd expect the bandwidth to gradually become worse with more participating nodes, but not dramatically so. Some networks become very inefficient at higher number of nodes.
 
-Please refer to [Real network throughput](../network#real-network-throughput) for more details.
+Please refer to [Real network throughput](../network/#real-network-throughput) for more details.
 
 Ideally you want to benchmark at least a few payloads - the ones that are of a particular interest to you because you know that this is the collective payload you will be using in your workloads. I usually just start by asking for a plot of a big payload of about 4-16GB (16GB would get the best bandwidth on the latest fastest inter-node networks), if the performance drops below 80% of the theoretical GBps, then I know we have a problem.
 

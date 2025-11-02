@@ -159,7 +159,7 @@ Additionally, depending on which cloud is used, it's very likely that the provid
 
 Another typical problem users run into is when they try to reuse their NCCL setup they had working on cloud A on a cloud B. Often things don't translate and one has to carefully remove any previously set environment variables and set them correctly anew for the new cloud. This issue is likely to occur even if you're using the same cloud, but different types of instances, as some network setups are very specific for a given instance and won't work elsewhere.
 
-Once you think you have set up the NCCL correctly, the next thing is to benchmark your connectivity and ensure that it matches the advertised speed (well, ~80% of it). Proceed to the [benchmark chapter](../benchmarks).
+Once you think you have set up the NCCL correctly, the next thing is to benchmark your connectivity and ensure that it matches the advertised speed (well, ~80% of it). Proceed to the [benchmark chapter](../benchmarks/).
 
 
 ## NCCL with docker containers

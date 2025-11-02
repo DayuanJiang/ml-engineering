@@ -2,30 +2,30 @@
 
 **Subsections**:
 
-- [Model parallelism](model-parallelism)
+- [Model parallelism](/training/model-parallelism/)
 
-- [Performance](performance)
+- [Performance](/training/performance/)
 
-- [Fault Tolerance](fault-tolerance)
+- [Fault Tolerance](/training/fault-tolerance/)
 
-- [Reproducibility](reproducibility)
+- [Reproducibility](/training/reproducibility/)
 
-- [Instabilities](instabilities)
+- [Instabilities](/training/instabilities/)
 
-- [Checkpoints](checkpoints)
+- [Checkpoints](/training/checkpoints/)
 
-- [Training hyper-parameters and model initializations](hparams.md)
+- [Training hyper-parameters and model initializations](/training/hparams.md)
 
-- [Tensor precision / Data types](dtype.md)
+- [Tensor precision / Data types](/training/dtype.md)
 
-- [Emulate a multi-node setup using just a single node](emulate-multi-node.md) - instructions on how to emulate a multi-node setup using just a single node - we use the `deepspeed` launcher here.
+- [Emulate a multi-node setup using just a single node](/training/emulate-multi-node.md) - instructions on how to emulate a multi-node setup using just a single node - we use the `deepspeed` launcher here.
 
-- [Re-train HF hub models from scratch using finetuning examples](re-train-hub-models.md)
+- [Re-train HF hub models from scratch using finetuning examples](/training/re-train-hub-models.md)
 
-- [Datasets](datasets.md)
+- [Datasets](/training/datasets.md)
 
 **Tools**:
 
-- [printflock.py](tools/printflock.py) - a tiny library that makes your `print` calls non-interleaved in a multi-gpu environment.
+- [printflock.py](/training/tools/printflock.py) - a tiny library that makes your `print` calls non-interleaved in a multi-gpu environment.
 
-- [multi-gpu-non-interleaved-print.py](tools/multi-gpu-non-interleaved-print.py) - a `flock`-based wrapper around `print` that prevents messages from getting interleaved when multiple processes print at the same time - which is the case with `torch.distributed` used with multiple-gpus.
+- [multi-gpu-non-interleaved-print.py](/training/tools/multi-gpu-non-interleaved-print.py) - a `flock`-based wrapper around `print` that prevents messages from getting interleaved when multiple processes print at the same time - which is the case with `torch.distributed` used with multiple-gpus.
