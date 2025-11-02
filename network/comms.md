@@ -19,10 +19,10 @@ In the world of PyTorch typically each process is tied to a single accelerator, 
 
 ### Broadcast
 
-![broadcast](/network/images/collective-broadcast-1.png)
+![broadcast](images/collective-broadcast-1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
-![broadcast](/network/images/collective-broadcast-2.png)
+![broadcast](images/collective-broadcast-2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 PyTorch API example:
@@ -33,10 +33,10 @@ PyTorch API example:
 
 ### Gather
 
-![gather](/network/images/collective-gather-1.png)
+![gather](images/collective-gather-1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
-![gather](/network/images/collective-gather-2.png)
+![gather](images/collective-gather-2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 PyTorch API example:
@@ -47,10 +47,10 @@ PyTorch API example:
 
 ### All-gather
 
-![all-gather](/network/images/collective-all-gather-1.png)
+![all-gather](images/collective-all-gather-1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
-![all-gather](/network/images/collective-all-gather-2.png)
+![all-gather](images/collective-all-gather-2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 For example, this collective is used in [ZeRO](../training/model-parallelism#zero-data-parallelism) (Deepspeed and FSDP) to gather the sharded model weights before `forward` and `backward` calls.
@@ -63,10 +63,10 @@ PyTorch API example:
 
 ### Reduce
 
-![reduce](/network/images/collective-reduce-1.png)
+![reduce](images/collective-reduce-1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
-![reduce](/network/images/collective-reduce-2.png)
+![reduce](images/collective-reduce-2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 PyTorch API example:
@@ -79,10 +79,10 @@ PyTorch supports multiple reduction operations like: `avg`, `sum`, `product`, `m
 
 ### All-reduce
 
-![all-reduce](/network/images/collective-all-reduce-1.png)
+![all-reduce](images/collective-all-reduce-1.png)
 
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
-![all-reduce](/network/images/collective-all-reduce-2.png)
+![all-reduce](images/collective-all-reduce-2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 For example, this collective is used in [DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) to reduce gradients between all participating ranks.
@@ -95,10 +95,10 @@ PyTorch API example:
 
 ### Scatter
 
-![scatter](/network/images/collective-scatter-1.png)
+![scatter](images/collective-scatter-1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
-![scatter](/network/images/collective-scatter-2.png)
+![scatter](images/collective-scatter-2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 PyTorch API example:
@@ -110,7 +110,7 @@ PyTorch API example:
 
 ### Reduce-Scatter
 
-![reduce-scatter](/network/images/collective-reduce-scatter.png)
+![reduce-scatter](images/collective-reduce-scatter.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 For example, this collective is used in [ZeRO](../training/model-parallelism#zero-data-parallelism) (Deepspeed and FSDP) to efficiently reduce gradients across all participating ranks. This is 2x more efficient than [all-reduce](#all-reduce).
@@ -124,10 +124,10 @@ PyTorch API example:
 
 ### All-to-all
 
-![all-to-all](/network/images/collective-all-to-all-1.png)
+![all-to-all](images/collective-all-to-all-1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
-![all-to-all](/network/images/collective-all-to-all.png)
+![all-to-all](images/collective-all-to-all.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 For example, this collective is used in [Deepspeed Sequence Parallelism](../training/model-parallelism#deepspeed-ulysses-sp) for attention computation, and in MoE [Expert Parallelism](../training/model-parallelism#expert-parallelism).
@@ -158,7 +158,7 @@ A naive broadcast will send `N/B` at each step. The total time to broadcast to `
 
 Here is an example of how a ring-based broadcast is performed:
 
-![ring-based broadcast](/network/images/broadcast-ring.png)
+![ring-based broadcast](images/broadcast-ring.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 This algorithm splits `N` into `S` messages
@@ -179,12 +179,12 @@ Ring-based `all-reduce` is done similarly to [broadcast](#broadcast-with-unidire
 
 Moreover, the whole message can be first split into chunks, to make the process even more efficient. Here is the reduction of the first chunk:
 
-![ring-based all-reduce chunk 1](/network/images/all-reduce-ring-chunk1.png)
+![ring-based all-reduce chunk 1](images/all-reduce-ring-chunk1.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 Then the next chunk is done, until all smaller messages are reduced:
 
-![ring-based all-reduce chunk 2](/network/images/all-reduce-ring-chunk2.png)
+![ring-based all-reduce chunk 2](images/all-reduce-ring-chunk2.png)
 [source](https://images.nvidia.com/events/sc15/pdfs/NCCL-Woolley.pdf)
 
 

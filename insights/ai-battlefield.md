@@ -180,7 +180,7 @@ Cons:
 
 Imagine a steam locomotive - the engine is great, but if the [fireman](https://en.wikipedia.org/wiki/Fireman_(steam_engine)) isn't fast enough to shovel the coal in, the train won't move fast.
 
-![](/insights/images/640px-Baureihe52Heizer.jpg)
+![](images/640px-Baureihe52Heizer.jpg)
 
 [source](https://commons.wikimedia.org/wiki/File:Baureihe52Heizer.jpg)
 

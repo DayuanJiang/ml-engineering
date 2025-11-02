@@ -4,7 +4,7 @@ While the methodologies found in this article were developed while working with 
 
 ## Helper tools
 
-Try to use the following script [torch-distributed-gpu-test.py](./torch-distributed-gpu-test.py) to diagnose the situation.
+Try to use the following script [torch-distributed-gpu-test.py](https://github.com/stas00/ml-engineering/blob/master/debug/torch-distributed-gpu-test.py) to diagnose the situation.
 
 This will help primarily with discovering network-related issues. And also to quickly understand how multi-gpu communications work.
 
@@ -376,7 +376,7 @@ Also, your code will now run much much slower and the more packages you trace th
 
 As `Trace` proved to provide very limited usability when debugging a complex multi-node multi-hour run crash, I have started on working on a better version of the `trace` python module.
 
-You can find it here: [NicerTrace](./NicerTrace.py)
+You can find it here: [NicerTrace](https://github.com/stas00/ml-engineering/blob/master/debug/NicerTrace.py)
 
 I added multiple additional flags to the constructor and made the output much more useful. You fill find a full working example in that same file, just run:
 
@@ -451,7 +451,7 @@ print(f"{dist.get_rank()}: passed stage 0")
 
 What you will quickly discover is that if you have multiple GPUs these prints will be badly interleaved and you will have a hard time making sense of the debug data. So let's fix this. We are going to override `print` with a custom version of the same, but which uses `flock` to ensure that only one process can write to stdout at the same time.
 
-The helper module `printflock.py` is included [here](../training/tools/printflock.py). To activate it just run this at the top of the module you're debugging:
+The helper module `printflock.py` is included [here](https://github.com/stas00/ml-engineering/blob/master/training/tools/printflock.py). To activate it just run this at the top of the module you're debugging:
 
 ```
 from printflock import printflock as print

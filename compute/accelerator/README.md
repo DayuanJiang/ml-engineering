@@ -53,7 +53,7 @@ The rest of this document will compare most of the above in details and if you w
 
 As most of us rent the compute, and we never see what it looks like, here is how an 8xH100 node looks like physically (this is the GPU tray of the Dell PowerEdge XE9680 Rack Server):
 
-![nvidia-a100-spec](/compute/accelerator/images/8x-H100-node-Dell-PowerEdge-XE9680.png)
+![nvidia-a100-spec](images/8x-H100-node-Dell-PowerEdge-XE9680.png)
 
 
 ## Glossary
@@ -102,7 +102,7 @@ We will discuss both the hardware and the software aspects in various chapters o
 
 Let's use the NVIDIA A100 spec as a reference point in the following sections.
 
-![nvidia-a100-spec](/compute/accelerator/images/nvidia-a100-spec.png)
+![nvidia-a100-spec](images/nvidia-a100-spec.png)
 
 [source](https://www.nvidia.com/en-us/data-center/a100/)
 
@@ -131,7 +131,7 @@ So you can see that int8 is 2x faster than bf16 which in turn is 2x faster than 
 
 Moreover, the TFLOPs depend on the matrices size as can be seen from this table:
 
-![nvidia-a100-matmul-tflops](/compute/accelerator/images/nvidia-a100-matmul-tflops.png)
+![nvidia-a100-matmul-tflops](images/nvidia-a100-matmul-tflops.png)
 
 [source](https://developer.nvidia.com/blog/cuda-11-features-revealed/)
 
@@ -340,7 +340,7 @@ And to conclude this section I'd like to repeat again that **the intention here 
 
 update: this new metric is starting to catch on. AMD published this graph and [explanations of why the efficiency of accelerators is going down as they get faster](https://rocm.blogs.amd.com/software-tools-optimization/Understanding_Peak_and_Max-Achievable_FLOPS/README.html):
 
-![maf-nvidia-amd-efficiency.png](/compute/accelerator/images/maf-nvidia-amd-efficiency.png)
+![maf-nvidia-amd-efficiency.png](images/maf-nvidia-amd-efficiency.png)
 
 [source](https://rocm.blogs.amd.com/software-tools-optimization/Understanding_Peak_and_Max-Achievable_FLOPS/README.html)
 

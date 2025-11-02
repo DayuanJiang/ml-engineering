@@ -26,6 +26,6 @@
 
 **Tools**:
 
-- [printflock.py](/training/tools/printflock.py) - a tiny library that makes your `print` calls non-interleaved in a multi-gpu environment.
+- [printflock.py](https://github.com/stas00/ml-engineering/blob/master/training/tools/printflock.py) - a tiny library that makes your `print` calls non-interleaved in a multi-gpu environment.
 
-- [multi-gpu-non-interleaved-print.py](/training/tools/multi-gpu-non-interleaved-print.py) - a `flock`-based wrapper around `print` that prevents messages from getting interleaved when multiple processes print at the same time - which is the case with `torch.distributed` used with multiple-gpus.
+- [multi-gpu-non-interleaved-print.py](https://github.com/stas00/ml-engineering/blob/master/training/tools/multi-gpu-non-interleaved-print.py) - a `flock`-based wrapper around `print` that prevents messages from getting interleaved when multiple processes print at the same time - which is the case with `torch.distributed` used with multiple-gpus.

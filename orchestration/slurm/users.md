@@ -2,7 +2,7 @@
 
 ## Quick start
 
-Simply copy this [example.slurm](./example.slurm) and adapt it to your needs.
+Simply copy this [example.slurm](https://github.com/stas00/ml-engineering/blob/master/orchestration/slurm/example.slurm) and adapt it to your needs.
 
 ## SLURM partitions
 
@@ -1011,8 +1011,8 @@ $ mkdir -p $WORK/cron/cron.hourly
 ```
 
 Now copy these two slurm script in `$WORK/cron/scheduler`:
-- [cron-daily.slurm](./cron-daily.slurm)
-- [cron-hourly.slurm](./cron-hourly.slurm)
+- [cron-daily.slurm](https://github.com/stas00/ml-engineering/blob/master/orchestration/slurm/cron-daily.slurm)
+- [cron-hourly.slurm](https://github.com/stas00/ml-engineering/blob/master/orchestration/slurm/cron-hourly.slurm)
 
 after editing those to fit your specific environment's account and partition information.
 

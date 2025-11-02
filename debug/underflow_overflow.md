@@ -1,6 +1,6 @@
 # Underflow and Overflow Detection
 
-For this section we are going to use the [underflow_overflow](./underflow_overflow.py) library.
+For this section we are going to use the [underflow_overflow](https://github.com/stas00/ml-engineering/blob/master/debug/underflow_overflow.py) library.
 
 If you start getting `loss=NaN` or the model inhibits some other abnormal behavior due to `inf` or `nan` in
 activations or weights one needs to discover where the first underflow or overflow happens and what led to it. Luckily

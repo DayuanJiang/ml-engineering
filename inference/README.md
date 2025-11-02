@@ -150,7 +150,7 @@ Temperature is another component of [Top-p](#sampling) sampling strategy which h
 
 The following set of plots should make this crystal clear:
 
-![softmax temperature](/inference/images/softmax-temperature.png)
+![softmax temperature](images/softmax-temperature.png)
 
 ([source](https://www.hopsworks.ai/dictionary/llm-temperature))
 
@@ -557,7 +557,7 @@ Example: Meta-Llama-3.1-8B in bf16 will need `2 (bf16 bytes) * 8B (num of params
 
 It'd be very expensive to recalculate all the previous KV (Key Value) values before each new token is generated and thus they are cached in accelerator's memory. Newly computed KV-values are appended to the existing cache.
 
-![computation process with caching inference](/inference/images/infer-kv-cache.png)
+![computation process with caching inference](images/infer-kv-cache.png)
 
 ([source](https://developer.nvidia.com/blog/accelerated-inference-for-large-transformer-models-using-nvidia-fastertransformer-and-nvidia-triton-inference-server/))
 
@@ -589,7 +589,7 @@ In this case the model has `num_key_value_heads=8` and `num_attention_heads=32`,
 
 Here is the diagram that shows the difference between MHA/GQA/MQA/MLA:
 
-![mha-gqa-mqa-mla](/inference/images/mha-gqa-mqa-mla.png)
+![mha-gqa-mqa-mla](images/mha-gqa-mqa-mla.png)
 
 [source](https://arxiv.org/abs/2405.04434)
 
@@ -686,7 +686,7 @@ To choose the most suitable inference framework you need to answer at least the 
 
 For example, here is a snapshot of [vLLM](https://github.com/vllm-project/vllm)'s stats as of 2024-08-24, which is one of the most popular inference frameworks as of this writing.
 
-![vllm](/inference/images/github-vllm-stats-2024-08-24.png)
+![vllm](images/github-vllm-stats-2024-08-24.png)
 
 You can see that it is used by many github repositories, it has a lot of contributors and that it's written mainly in Python. So it should be very easy to find this information about any inference framework you may consider. This was just an example and not an endorsement of vLLM.
 

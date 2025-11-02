@@ -2,7 +2,7 @@
 
 ## Maximum Achievable Matmul FLOPS Finder
 
-Maximum Achievable Matmul FLOPS (MAMF) Benchmark: [mamf-finder.py](./mamf-finder.py) was derived from research found in [The Case for Co-Designing Model Architectures with Hardware](https://arxiv.org/abs/2401.14489) paper.
+Maximum Achievable Matmul FLOPS (MAMF) Benchmark: [mamf-finder.py](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/benchmarks/mamf-finder.py) was derived from research found in [The Case for Co-Designing Model Architectures with Hardware](https://arxiv.org/abs/2401.14489) paper.
 
 For a detailed discussion and the numbers for various accelerators see [Maximum Achievable FLOPS](../#maximum-achievable-flops).
 
@@ -111,7 +111,7 @@ There are a few excellent detailed write ups on how to perform CUDA benchmarks:
 1. [How to Accurately Time CUDA Kernels in Pytorch](https://www.speechmatics.com/company/articles-and-news/timing-operations-in-pytorch)
 2. [How to Benchmark Code on CUDA Devices?](https://salykova.github.io/sgemm-gpu#2-how-to-benchmark-code-on-cuda-devices) - this one is different from (1) in that it suggests to set both GPU and Memory clocks, whereas (1) only locks the GPU clock.
 
-You can see these instructions applied in [mamf-finder.py](./mamf-finder.py) (other than clock locking)
+You can see these instructions applied in [mamf-finder.py](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/benchmarks/mamf-finder.py) (other than clock locking)
 
 Here are some excellent related reads:
 

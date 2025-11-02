@@ -1,6 +1,6 @@
 # Writing and Running Tests
 
-Note: a part of this document refers to functionality provided by the included [testing_utils.py](./testing_utils.py), the bulk of which I have developed while I worked at HuggingFace.
+Note: a part of this document refers to functionality provided by the included [testing_utils.py](https://github.com/stas00/ml-engineering/blob/master/testing/testing_utils.py), the bulk of which I have developed while I worked at HuggingFace.
 
 This document covers both `pytest` and `unittest` functionalities and shows how both can be used together.
 
@@ -383,12 +383,7 @@ n_gpu = get_gpu_count()
 
 `pytest` can't deal with distributed training directly. If this is attempted - the sub-processes don't do the right thing and end up thinking they are `pytest` and start running the test suite in loops. It works, however, if one spawns a normal process that then spawns off multiple workers and manages the IO pipes.
 
-Here are some tests that use it:
-
-- [test_trainer_distributed.py](https://github.com/huggingface/transformers/blob/58e3d23e97078f361a533b9ec4a6a2de674ea52a/tests/trainer/test_trainer_distributed.py)
-- [test_deepspeed.py](https://github.com/huggingface/transformers/blob/58e3d23e97078f361a533b9ec4a6a2de674ea52a/tests/deepspeed/test_deepspeed.py)
-
-To jump right into the execution point, search for the `execute_subprocess_async` call in those tests, which you will find inside [testing_utils.py](./testing_utils.py).
+To jump right into the execution point, search for the `execute_subprocess_async` call in those tests, which you will find inside [testing_utils.py](https://github.com/stas00/ml-engineering/blob/master/testing/testing_utils.py).
 
 You will need at least 2 GPUs to see these tests in action:
 
@@ -397,6 +392,13 @@ CUDA_VISIBLE_DEVICES=0,1 RUN_SLOW=1 pytest -sv tests/test_trainer_distributed.py
 ```
 
 (`RUN_SLOW` is a special decorator used by HF Transformers to normally skip heavy tests)
+
+Here are some tests that use it:
+
+- [test_trainer_distributed.py](https://github.com/huggingface/transformers/blob/58e3d23e97078f361a533b9ec4a6a2de674ea52a/tests/trainer/test_trainer_distributed.py)
+- [test_deepspeed.py](https://github.com/huggingface/transformers/blob/58e3d23e97078f361a533b9ec4a6a2de674ea52a/tests/deepspeed/test_deepspeed.py)
+
+To jump right into the execution point, search for the `execute_subprocess_async` call in those tests, which you will find inside [testing_utils.py](https://github.com/stas00/ml-engineering/blob/master/testing/testing_utils.py)
 
 ### Output capture
 
@@ -1010,4 +1012,4 @@ This feature is most useful on CI, which makes it much easier to both introspect
 
 Using a different value to `--make-reports=` for different groups of tests can have each group saved separately rather than clobbering each other.
 
-All this functionality was already inside `pytest` but there was no way to extract it easily so I added the monkey-patching overrides [testing_utils.py](./testing_utils.py). Well, I did ask if I can contribute this as a feature to `pytest` but my proposal wasn't welcome.
+All this functionality was already inside `pytest` but there was no way to extract it easily so I added the monkey-patching overrides [testing_utils.py](https://github.com/stas00/ml-engineering/blob/master/testing/testing_utils.py). Well, I did ask if I can contribute this as a feature to `pytest` but my proposal wasn't welcome.

@@ -154,7 +154,7 @@ Here is the intra-node unidirectional theoretical peer-to-peer peak bandwidth cr
 
 When peer-to-peer bandwidth is much lower than all-to-all it means that if you don't use all of the accelerators on the node by the same application, you will end up with a much lower bandwidth and your application will have a performance impact if the accelerators have to communicate between each others.
 
-To validate this the [all_reduce_bench.py](/network/benchmarks/all_reduce_bench.py) was run on a 8x GPU AMD MI300X node with a 4GB payload and the `busbw` measurements were:
+To validate this the [all_reduce_bench.py](https://github.com/stas00/ml-engineering/blob/master/network/benchmarks/all_reduce_bench.py) was run on a 8x GPU AMD MI300X node with a 4GB payload and the `busbw` measurements were:
 
 - 2 GPUs:  47.671 GBps
 - 8 GPUs:  312.912 GBps
@@ -334,7 +334,7 @@ The peer-to-peer bandwidth is just that of a single link/direction (the 2nd colu
 
 Other intra-node solutions typically have the same all-to-all and peer-to-peer intra-node bandwidth, so Infinity Fabric appears to be dramatically slower. I suppose that is because these were created mainly for inference, as these slow speeds would dramatically slow down LLM training.
 
-![AMD Infinity Platform Architecture](/network/images/amd-infinity-arch-MI300X.png)
+![AMD Infinity Platform Architecture](images/amd-infinity-arch-MI300X.png)
 
 Platform specs:
 - [MI250X](https://www.amd.com/en/products/accelerators/instinct/mi200/mi250x.html)
@@ -535,7 +535,7 @@ In the case of NVL36, NVL72 and others bigger than NVL8, the collective has to e
 
 The left side of the following slide shows a nice 30% speed up of `all-reduce` bandwidth from NVLink 4 non-SHARP (370GBps) to NVLink 4 SHARP (480GBps). I was able to match the results with a payload of about 8GB. For `all-reduce` on NVL72 (right side) it shows a 25% improvement (`850/680`).
 
-![all-reduce bw](/network/images/all-reduce-bw-2025.png)
+![all-reduce bw](images/all-reduce-bw-2025.png)
 
 [source](https://www.nvidia.com/en-us/on-demand/session/gtc25-s72583/)
 
@@ -576,7 +576,7 @@ If the experimental model still contains 2B params like in the previous section 
 
 Here is the all-reduce collective visualized:
 
-![all-reduce](/network/images/all-reduce-collective.png)
+![all-reduce](images/all-reduce-collective.png)
 
 ([source](https://pytorch.org/tutorials/intermediate/dist_tuto.html#collective-communication))
 
@@ -792,7 +792,7 @@ This benchmark run an `all_reduce` collective for various payload sizes from 32K
 
 As you can see for payloads smaller than 8MB the throughput is very low - and it starts saturating around payload size of 536MB. It's mostly because of latency. Reducing a single 4GB payload is much faster than 1000x 4MB payloads.
 
-Here is a benchmark that demonstrates that: [all_reduce_latency_comp.py](/network/benchmarks/all_reduce_latency_comp.py). Let's run it on the same A100 node:
+Here is a benchmark that demonstrates that: [all_reduce_latency_comp.py](https://github.com/stas00/ml-engineering/blob/master/network/benchmarks/all_reduce_latency_comp.py). Let's run it on the same A100 node:
 
 ```
 $ python -u -m torch.distributed.run --nproc_per_node=8 all_reduce_latency_comp.py
@@ -879,25 +879,25 @@ note: [NVIDIA/nvbandwidth](https://github.com/NVIDIA/nvbandwidth) is supposed to
 
 The following plot demonstrates how the actual bandwidth changes for all-reduce with the size of the message and the number of participating nodes (4 to 512 nodes):
 
-![nccl all-reduce scan benchmark](/network/images/nccl-all-reduce-scan.png)
+![nccl all-reduce scan benchmark](images/nccl-all-reduce-scan.png)
 ([source](https://arxiv.org/abs/2411.13055))
 
 And here is a similar plot, but using NVLSTree algo, which helps to reach an even better performance on H100s (4 to 1024 nodes):
 
-![nccl all-reduce nvlstree scan benchmark](/network/images/nccl-all-reduce-scan-nvlstree.png)
+![nccl all-reduce nvlstree scan benchmark](images/nccl-all-reduce-scan-nvlstree.png)
 [source](https://www.nvidia.com/en-us/on-demand/session/gtc24-s62129/)
 
 Here is another similar plot but it compares the message sizes and several networks:
 
-![Low-level Uni-directional Bandwidth Measurements](/network/images/ccgrid11-uni-direction-bandwidth.png)
+![Low-level Uni-directional Bandwidth Measurements](images/ccgrid11-uni-direction-bandwidth.png)
 ([source](https://ieeexplore.ieee.org/document/5238655))
 
 That last plot is from 2011, and the former ones are from 2024 - comparing these you can appreciate how much faster the networks have become and how much bigger messages are being sent.
 
 Here are 2025 performance plots that show the actual achievable bandwidth with the modern technologies in the context of all-reduce and all-to-all collectives:
 
-![all-reduce bw](/network/images/all-reduce-bw-2025.png)
-![all-to-all bw](/network/images/all-to-all-bw-2025.png)
+![all-reduce bw](images/all-reduce-bw-2025.png)
+![all-to-all bw](images/all-to-all-bw-2025.png)
 
 [source](https://www.nvidia.com/en-us/on-demand/session/gtc25-s72583/)
 
@@ -910,7 +910,7 @@ Latency tells us how long it takes to send or receive a message. It has an inver
 
 Here is an old but good plot demonstrating how the latencies change with message size and the type of the network:
 
-![Low-level Latency Measurements](/network/images/ccgrid11-low-level-latency.png)
+![Low-level Latency Measurements](images/ccgrid11-low-level-latency.png)
 ([source](https://ieeexplore.ieee.org/document/5238655))
 
 Typically the more "hops" the message has to travel, the bigger the latency. 2 accelerators residing on the same node and connected directly to each other (e.g., NVLink) will have the least amount of latency. If their communication path traverses a PCIe switch the latency will be bigger. 2 accelerators residing on 2 different nodes sharing a single switch will have a bigger latency because there is a switch to traverse. The further they get away from each other, the more switches the message has to travel through, the bigger the latency.

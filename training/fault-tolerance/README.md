@@ -199,7 +199,7 @@ Once you understand how to schedule watchdogs and you have a notification facili
 
 The most obvious watchdog is one which checks that there is a training SLURM job running or more are scheduled to run.
 
-Here is an example [slurm-status.py](slurm-status.py) that was used during BLOOM-176B training. This watchdog was sending an email if a job was detected to be neither running nor scheduled and it was also piping its check results into the main training's log file. As we used [Crontab Emulation](../../orchestration/slurm/users.md#crontab-emulation), we simply needed to drop  [slurm-status.slurm](slurm-status.slurm) into the `cron/cron.hourly/` folder and the previously launched SLURM crontab emulating scheduler would launch this check approximately once an hour.
+Here is an example [slurm-status.py](https://github.com/stas00/ml-engineering/blob/master/training/fault-tolerance/slurm-status.py) that was used during BLOOM-176B training. This watchdog was sending an email if a job was detected to be neither running nor scheduled and it was also piping its check results into the main training's log file. As we used [Crontab Emulation](../../orchestration/slurm/users.md#crontab-emulation), we simply needed to drop  [slurm-status.slurm](https://github.com/stas00/ml-engineering/blob/master/training/fault-tolerance/slurm-status.slurm) into the `cron/cron.hourly/` folder and the previously launched SLURM crontab emulating scheduler would launch this check approximately once an hour.
 
 The key part of the SLURM job is:
 ```
@@ -252,7 +252,7 @@ footnote: Use `df -ih` to see the inodes quota and the current usage.
 
 footnote: Some filesystems use internal compression and so the reported disk usage can be less than reality if copied elsewhere, which can be confusing.
 
-So here is [fs-watchdog.py](./fs-watchdog.py) that was used during BLOOM-176B training. This watchdog was sending an email if any of the storage requirements thresholds hasn't been met and here is the corresponding [fs-watchdog.slurm](./fs-watchdog.slurm) that was driving it.
+So here is [fs-watchdog.py](https://github.com/stas00/ml-engineering/blob/master/training/fault-tolerance/fs-watchdog.py) that was used during BLOOM-176B training. This watchdog was sending an email if any of the storage requirements thresholds hasn't been met and here is the corresponding [fs-watchdog.slurm](https://github.com/stas00/ml-engineering/blob/master/training/fault-tolerance/fs-watchdog.slurm) that was driving it.
 
 If you study the watchdog code you can see that for each partition we were monitoring both the disk usage and inodes. We used special quota tools provided by the HPC to get instant stats for some partitions, but these tools didn't work for all partitions and there we had to fallback to using `df` and even a much slower `du`. As such it should be easy to adapt to your usecase.
 

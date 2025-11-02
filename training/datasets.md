@@ -28,7 +28,7 @@ If you aren't using HF Accelerate, I have recreated similar containers, except c
 - `global_main_process_first` - for shared fs
 - `local_main_process_first` - for local to node fs
 
-You can find them [here](/training/tools/main_process_first.py).
+You can find them [here](https://github.com/stas00/ml-engineering/blob/master/training/tools/main_process_first.py).
 
 Now, what if you want to write a generic code that automatically works on shared and local filesystems. I added another helper that automatically discovers what type of filesystem we are dealing with and based on that call the right containers. I called it `main_process_by_path_first`, which is used like:
 
@@ -40,7 +40,7 @@ with main_process_by_path_first(path):
     # optionally cache it and have the rest of the processes load the cache
 ```
 
-You can find it [here](/training/tools/main_process_first.py).
+You can find it [here](https://github.com/stas00/ml-engineering/blob/master/training/tools/main_process_first.py).
 
 Of course, besides containers you will also want utils to check the type of main process, and so there are 3 of those corresponding to the containers:
 
@@ -48,7 +48,7 @@ Of course, besides containers you will also want utils to check the type of main
 - `is_local_main_process()`
 - `is_global_main_process()`
 
-They are all found in [here](/training/tools/main_process_first.py).
+They are all found in [here](https://github.com/stas00/ml-engineering/blob/master/training/tools/main_process_first.py).
 
 You can see them in action by running:
 

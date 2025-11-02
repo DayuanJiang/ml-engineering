@@ -102,7 +102,7 @@ Here `ib` typically tells us it's an InfiniBand card, but really it can be any o
 If you lost me, we want the IP addresses so that we could test if ip:port is open on each node in question.
 
 Finally, going back to our pair of `10.0.0.1:6000` and `10.0.0.2:6000` let's do an `all_reduce` test using 2 terminals, where we choose `10.0.0.1` as the master host which will coordinate other nodes.
-For testing we will use this helper debug program [torch-distributed-gpu-test.py](./torch-distributed-gpu-test.py).
+For testing we will use this helper debug program [torch-distributed-gpu-test.py](https://github.com/stas00/ml-engineering/blob/master/debug/torch-distributed-gpu-test.py).
 
 In terminal A:
 
@@ -181,7 +181,7 @@ and to run, it's just:
 $ mpirun --hostfile  -np 16 -map-by ppr:8:node python my-program.py
 ```
 
-Note that I used `my-program.py` here because [torch-distributed-gpu-test.py](./torch-distributed-gpu-test.py) was written to work with `torch.distributed.run` (also known as `torchrun`). With `mpirun` you will have to check your specific implementation to see which environment variable it uses to pass the rank of the program and replace `LOCAL_RANK` with it, the rest should be mostly the same.
+Note that I used `my-program.py` here because [torch-distributed-gpu-test.py](https://github.com/stas00/ml-engineering/blob/master/debug/torch-distributed-gpu-test.py) was written to work with `torch.distributed.run` (also known as `torchrun`). With `mpirun` you will have to check your specific implementation to see which environment variable it uses to pass the rank of the program and replace `LOCAL_RANK` with it, the rest should be mostly the same.
 
 Nuances:
 - You might have to explicitly tell it which interface to use by adding `--mca btl_tcp_if_include 10.0.0.0/24` to match our example. If you have many network interfaces it might use one that isn't open or just the wrong interface.
@@ -693,7 +693,7 @@ For example, see this [discussion](https://github.com/deepspeedai/DeepSpeed/issu
 
 It's uncommon that small variations make much of a difference, but sometimes the difference can be clearly seen, as in this example where the same image is produced on a CPU and an MPS device.
 
-![](/debug/images/math-fp-discrepancy-outcome-lizard.png)
+![](images/math-fp-discrepancy-outcome-lizard.png)
 
 This snapshot and the commentary come from this [PyTorch Issue thread](https://github.com/pytorch/pytorch/issues/84936#issuecomment-1246084645).
 

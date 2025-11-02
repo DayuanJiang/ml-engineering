@@ -93,9 +93,9 @@ Things that you are likely to need to find quickly and often.
 
 Tools:
 
-- [all_reduce_bench.py](/network/benchmarks/all_reduce_bench.py) - a much easier way to benchmark network throughput than nccl-tests.
-- [torch-distributed-gpu-test.py](/debug/torch-distributed-gpu-test.py) - a tool to quickly test your inter-node connectivity
-- [mamf-finder.py](/compute/accelerator/benchmarks/mamf-finder.py) - what is the actual TFLOPS measurement you can get from your accelerator.
+- [all_reduce_bench.py](https://github.com/stas00/ml-engineering/blob/master/network/benchmarks/all_reduce_bench.py) - a much easier way to benchmark network throughput than nccl-tests.
+- [torch-distributed-gpu-test.py](https://github.com/stas00/ml-engineering/blob/master/debug/torch-distributed-gpu-test.py) - a tool to quickly test your inter-node connectivity
+- [mamf-finder.py](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/benchmarks/mamf-finder.py) - what is the actual TFLOPS measurement you can get from your accelerator.
 
 Guides:
 

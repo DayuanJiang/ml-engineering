@@ -35,7 +35,7 @@
 * **Part 6. Development**
   * [Debugging and Troubleshooting](/debug/)
   * [PyTorch Debugging](/debug/pytorch.md)
-  * [Torch Distributed GPU Test](/debug/torch-distributed-gpu-test.py)
+  * [Torch Distributed GPU Test](https://github.com/stas00/ml-engineering/blob/master/debug/torch-distributed-gpu-test.py)
   * [Make Tiny Models/Datasets/Tokenizers](/debug/make-tiny-models-tokenizers-datasets.md)
   * [Testing](/testing/)
 
@@ -43,8 +43,8 @@
   * [Resources](/resources/)
 
 * **Shortcuts & Tools**
-  * [all_reduce_bench.py](/network/benchmarks/all_reduce_bench.py)
-  * [mamf-finder.py](/compute/accelerator/benchmarks/mamf-finder.py)
+  * [all_reduce_bench.py](https://github.com/stas00/ml-engineering/blob/master/network/benchmarks/all_reduce_bench.py)
+  * [mamf-finder.py](https://github.com/stas00/ml-engineering/blob/master/compute/accelerator/benchmarks/mamf-finder.py)
   * [SLURM for Users](/orchestration/slurm/users.md)
 
 * **About**
