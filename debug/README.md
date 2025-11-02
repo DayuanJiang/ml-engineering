@@ -3,23 +3,23 @@
 
 ## Guides
 
-- [Debugging PyTorch programs](./pytorch.md)
+- [Debugging PyTorch programs](/debug/pytorch.md)
 
-- [Diagnosing Hangings and Deadlocks in Multi-Node Multi-GPU Python Programs](./torch-distributed-hanging-solutions.md)
+- [Diagnosing Hangings and Deadlocks in Multi-Node Multi-GPU Python Programs](/debug/torch-distributed-hanging-solutions.md)
 
-- [Network Debug](../network/debug/)
+- [Network Debug](/network/debug/)
 
-- [Troubleshooting NVIDIA GPUs](../compute/accelerator/nvidia/debug.md)
+- [Troubleshooting NVIDIA GPUs](/compute/accelerator/nvidia/debug.md)
 
-- [Underflow and Overflow Detection](./underflow_overflow.md)
+- [Underflow and Overflow Detection](/debug/underflow_overflow.md)
 
 
 
 ## Tools
 
-- [Debug Tools](./tools.md)
+- [Debug Tools](/debug/tools.md)
 
-- [torch-distributed-gpu-test.py](./torch-distributed-gpu-test.py) - this a `torch.distributed` diagnostics
+- [torch-distributed-gpu-test.py](/debug/torch-distributed-gpu-test.py) - this a `torch.distributed` diagnostics
   script that checks that all GPUs in the cluster (one or many nodes) can talk to each other and allocate gpu memory.
 
-- [NicerTrace](./NicerTrace.py) - this is an improved `trace` python module with multiple additional flags added to the constructor and more useful output.
+- [NicerTrace](/debug/NicerTrace.py) - this is an improved `trace` python module with multiple additional flags added to the constructor and more useful output.

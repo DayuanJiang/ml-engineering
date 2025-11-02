@@ -4,7 +4,7 @@
 
 ### all_reduce benchmark
 
-[all_reduce_bench.py](all_reduce_bench.py) - a tool to benchmark the real network bandwidth while performing `all_reduce` on a largish amount of data. This is useful for finding out what one gets in reality as compared to the advertised spec. Somewhat similar to `nccl-tests`, but requires just PyTorch to run.
+[all_reduce_bench.py](./all_reduce_bench.py) - a tool to benchmark the real network bandwidth while performing `all_reduce` on a largish amount of data. This is useful for finding out what one gets in reality as compared to the advertised spec. Somewhat similar to `nccl-tests`, but requires just PyTorch to run.
 
 It generates output like this:
 ```
@@ -34,13 +34,13 @@ It generates output like this:
 
 And it also creates a plot:
 
-![all-reduce-bench-plot 4 nodes](images/all-reduce-bench-plot-4n.png)
+![all-reduce-bench-plot 4 nodes](/network/benchmarks/images/all-reduce-bench-plot-4n.png)
 
-For launching examples and notes please see the top of [all_reduce_bench.py](all_reduce_bench.py).
+For launching examples and notes please see the top of [all_reduce_bench.py](./all_reduce_bench.py).
 
 This table should give a good sense for what scores you should expect for all-reduce collective on a well-tuned network (left is intra-node and right is inter-node):
 
-![all-reduce multi node bandwidth](images/all-reduce-multi-node-bandwidth.png)
+![all-reduce multi node bandwidth](/network/benchmarks/images/all-reduce-multi-node-bandwidth.png)
 [source](https://www.nvidia.com/en-us/on-demand/session/gtc24-s62129/)
 
 If you're benchmarking a different collective the expected bandwidth can be very different from the above all-reduce results. [This presentation](https://www.nvidia.com/en-us/on-demand/session/gtc24-s62129/) also gives point-to-point communication bandwidth expectations.
@@ -53,7 +53,7 @@ If you're benchmarking a different collective the expected bandwidth can be very
 
 ### all_reduce latency comparison
 
-[all_reduce_latency_comp.py](all_reduce_latency_comp.py) - exemplifies how 1x 4GB reduction is much faster than 1000x 4MB reductions.
+[all_reduce_latency_comp.py](./all_reduce_latency_comp.py) - exemplifies how 1x 4GB reduction is much faster than 1000x 4MB reductions.
 
 
 
@@ -77,7 +77,7 @@ Note: The [EAI cookbook](https://github.com/EleutherAI/cookbook) contains a set 
 
 Here is a simple all-reduce benchmark that you can use to quickly measure the throughput of your internode network:
 
-[all_reduce_bench.py](all_reduce_bench.py)
+[all_reduce_bench.py](./all_reduce_bench.py)
 
 On CSPs that have enabled [SLURM Pyxis Container Plugin](https://github.com/NVIDIA/pyxis), such as CoreWeave, Crusoe, AWS, Oracle, Azure, GCP, etc, `all_reduce_bench.py` can be easily ran & reproduced via the following command:
 ```bash

@@ -299,7 +299,7 @@ Part 1. So first let's calculate how much working memory is needed to process a 
 
 `activation_memory_per_layer = num_of_hidden_states_copies * dtype_size * bs * seqlen * hidden_size`
 
-The `num_of_hidden_states_copies` is typically between 20 and 50 and will vary between different model architectures. To get a good feeling for the variations - let's measure a handful of models using [activation-memory-per-layer.py](benchmarks/activation-memory-per-layer.py). What we get is:
+The `num_of_hidden_states_copies` is typically between 20 and 50 and will vary between different model architectures. To get a good feeling for the variations - let's measure a handful of models using [activation-memory-per-layer.py](/training/performance/benchmarks/activation-memory-per-layer.py). What we get is:
 ```
 24.0 "HuggingFaceTB/SmolLM2-360M"
 28.0 "meta-llama/Llama-3.1-8B-Instruct"
@@ -418,7 +418,7 @@ There is a 450MB difference, but here we only loaded kernels to do `torch.ones` 
 
 When using `torch.distributed` expect ~1-2GB of GPU memory taken away just to initialize things - the more GPUs the higher the memory used. Different backends are likely to use a different amount of memory. And this memory won't be accounted for by torch memory profiler.
 
-Here is [torch-dist-mem-usage.py](distributed/torch-dist-mem-usage.py) that demonstrates the actual memory usage:
+Here is [torch-dist-mem-usage.py](/training/performance/distributed/torch-dist-mem-usage.py) that demonstrates the actual memory usage:
 
 ```
 $ python -u -m torch.distributed.run --nproc_per_node=2 --rdzv_endpoint localhost:6000  --rdzv_backend c10d \
@@ -610,7 +610,7 @@ First, some background.
 
 NVIDIA GPUs divide the output matrix into regions or tiles as shown in the below figure and schedule them to one of the available streaming multiprocessors (SM) on the GPU (e.g., A100 GPUs have 108 SMs). Each tile or thread block is processed in a Tensor Core, which NVIDIA introduced for fast tensor operations. NVIDIA Tensor Cores are only available for GEMMs with appropriate dimensions. Tensor Cores can be fully utilized when GEMM dimensions `m`, `k`, and `n` are multiples of 16 bytes and 128 bytes for V100 and A100 GPUs, respectively. Since a FP16 element is 2 bytes, this corresponds to dimension sizes that are multiples of 8 and 64 elements, respectively. If these dimension sizes are not possible, Tensor Cores perform better with larger multiples of 2 bytes.
 
-![tiling](images/tiling.png)
+![tiling](/training/performance/images/tiling.png)
 
 There are multiple tile sizes that the kernel can choose from. If the GEMM size does not divide evenly into the tile size, there will be wasted compute, where the thread block must execute fully on the SM, but only part of the output is necessary. This is called the **tile quantization** effect, as the output is quantized into discrete tiles.
 
@@ -620,7 +620,7 @@ What this means for transformers, is that for a given ratio of `h/a`, one needs 
 
 An example of this for 32 attention heads:
 
-![wave quantization](images/wave-quant.png)
+![wave quantization](/training/performance/images/wave-quant.png)
 
 More powers of 2 in `h/a` helps!
 
@@ -629,14 +629,14 @@ More powers of 2 in `h/a` helps!
 
 Generally, it's most computationally efficient to keep the ratio of `h/a` as large as possible without accuracy degradation. A good figure from [The Case for Co-Designing Model Architectures with Hardware](https://arxiv.org/abs/2401.14489) showing this effect is:
 
-![attention heads](images/attention-less-heads.png)
+![attention heads](/training/performance/images/attention-less-heads.png)
 
 
 ### Flash attention
 
 If you're using [Flash Attention](https://github.com/Dao-AILab/flash-attention), good news! These MHA sizing constraints are taken care of for you. Your only constraint is to have a large enough ratio of `h/a` to saturate your GPU cores:
 
-![flash attention](images/flash-attention.png)
+![flash attention](/training/performance/images/flash-attention.png)
 
 
 ### SwiGLU-based MLP
@@ -649,7 +649,7 @@ In order to overcome this problem one only needs to realize that the `8/3` coeff
 
 Now that we know the recommended coefficient isn’t exact and since a good `h` has already been chosen, one can now search for a good nearby coefficient that still leads to high-performance GEMMs in the MLP. Running a brute-force search reveals that Llama-2-7B’s intermediate size is indeed one of the best performing sizes in its range.
 
-Here is [swiglu-maf-bench.py](benchmarks/matrix-shape/swiglu-maf-bench.py) that can be easily adapted to your use-case and once run on the target hardware the training will happen on, you will be able to find the best hidden size of the MLP.
+Here is [swiglu-maf-bench.py](/training/performance/benchmarks/matrix-shape/swiglu-maf-bench.py) that can be easily adapted to your use-case and once run on the target hardware the training will happen on, you will be able to find the best hidden size of the MLP.
 
 Let's run it on H100 with `h = 4096`:
 
@@ -700,7 +700,7 @@ First, let's understand what do NUMA nodes signify.
 
 Here is a typical A100 8x GPUs server NUMA nodes diagram:
 
-![a100 server numa nodes](images/a100-server-hwloc.png)
+![a100 server numa nodes](/training/performance/images/a100-server-hwloc.png)
 
 As you can see it has 2 CPUs, each defining a NUMA block, and each such block contains a group of 4 GPUs. The GPUs are the grey blocks that say `CoProc` with 108 compute units (SMs) and 79GB of memory.
 
@@ -745,7 +745,7 @@ One of the most common tools to do that is using `numactl`, which sets the NUMA 
 
 For example, let's see how it can be integrated with the `torchrun` launcher.
 
-This launcher currently needs a helper util [numa-set.sh](benchmarks/numa/numa-set.sh) to perform NUMA affinity settings, once you downloaded it and made it executable, you can now get the right NUMA affinity using:
+This launcher currently needs a helper util [numa-set.sh](/training/performance/benchmarks/numa/numa-set.sh) to perform NUMA affinity settings, once you downloaded it and made it executable, you can now get the right NUMA affinity using:
 
 ```
 torchrun --nproc_per_node=8 --role : --tee 3 --no-python ./numa-set.sh your-program.py
@@ -804,7 +804,7 @@ So now we just need to figure out how to programmatically get the right cpu sets
 
 If you're using NVIDIA GPUs, `pynvml` (`pip install pynvml`) can be very helpful to get all sorts of information about the gpu and not needing to call `nvidia-smi` - in this situation we are going to use for it to tell us the correct affinity given a GPU index.
 
-In [numa-set-pynvml.py](benchmarks/numa/numa-set-pynvml.py) you will find a working helper function that you could call at the very top of your training loop like so:
+In [numa-set-pynvml.py](/training/performance/benchmarks/numa/numa-set-pynvml.py) you will find a working helper function that you could call at the very top of your training loop like so:
 ```
 local_rank = torh.distributed.get_rank()
 set_numa_affinity(0, verbose=True)
@@ -861,7 +861,7 @@ DataLoader(..., num_workers=2, ...
 
 Now when `next(iter(dataloader))` is called the data should be already in the CPU memory with all the transforms done. It still needs to be copied to the accelerator memory - to speed that up see [Pinned memory and non blocking device copy](#pinned-memory-and-non-blocking-device-copy).
 
-Here is a benchmark which emulates a slow data transform: [num-workers-bench.py](benchmarks/dataloader/num-workers-bench.py)
+Here is a benchmark which emulates a slow data transform: [num-workers-bench.py](/training/performance/benchmarks/dataloader/num-workers-bench.py)
 
 ```
 num_workers=0: average time: 5.388
@@ -895,7 +895,7 @@ is likely to make the `DataLoader` less of a bottleneck.
 1. Enabling pinned memory allows for a more efficient data transfer from CPU to accelerator memory.
 2. non-blocking will further speed things up by allowing some overlap between compute and data movements
 
-Here is a small benchmark demonstrating the difference: [pin-memory-non-block-bench.py](benchmarks/dataloader/pin-memory-non-block-bench.py). When I run it on an A100 80GB-PCIe, the output was:
+Here is a small benchmark demonstrating the difference: [pin-memory-non-block-bench.py](/training/performance/benchmarks/dataloader/pin-memory-non-block-bench.py). When I run it on an A100 80GB-PCIe, the output was:
 ```
 pin_memory= True, non_blocking= True: average time: 0.459
 pin_memory= True, non_blocking=False: average time: 0.522

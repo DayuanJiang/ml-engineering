@@ -42,7 +42,7 @@ For details see [DistributedDataParallel](https://pytorch.org/docs/stable/genera
 ### ZeRO Data Parallelism
 
 ZeRO-powered data parallelism (ZeRO-DP) is described on the following diagram from this [blog post](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
-![DeepSpeed-Image-1](images/parallelism-zero.png)
+![DeepSpeed-Image-1](/training/model-parallelism/images/parallelism-zero.png)
 
 It can be difficult to wrap one's head around it, but in reality the concept is quite simple. This is just the usual `DataParallel` (DP), except, instead of replicating the full model params, gradients and optimizer states, each GPU stores only a slice of it.  And then at run-time when the full layer params are needed just for the given layer, all GPUs synchronize to give each other parts that they miss - this is it.
 
@@ -221,7 +221,7 @@ Pipeline Parallelism (PP) is almost identical to a naive MP, but it solves the G
 
 The following illustration from the [GPipe paper](https://ai.googleblog.com/2019/03/introducing-gpipe-open-source-library.html) shows the naive MP on the top, and PP on the bottom:
 
-![mp-pp](images/parallelism-gpipe-bubble.png)
+![mp-pp](/training/model-parallelism/images/parallelism-gpipe-bubble.png)
 
 It's easy to see from the bottom diagram how PP has less dead zones, where GPUs are idle. The idle parts are referred to as the "bubble".
 
@@ -252,7 +252,7 @@ The choice of the schedule is critical to the efficient performance, with the mo
 
 Here is for example an interleaved pipeline:
 
-![interleaved-pipeline-execution](images/parallelism-sagemaker-interleaved-pipeline.png)
+![interleaved-pipeline-execution](/training/model-parallelism/images/parallelism-sagemaker-interleaved-pipeline.png)
 
 Here the bubble (idle time) is further minimized by prioritizing backward passes.
 
@@ -262,7 +262,7 @@ Varuna further tries to improve the schedule by using simulations to discover th
 
 [DeepSeek v3](https://arxiv.org/abs/2412.19437) introduced an even more efficient PP via DualPipe that reduces the bubble size and succeeds at a better compute/comms overlap. See section 3.2.1 of the paper for the specific details.
 
-![dualpipe](images/parallelism-pp-dualpipe.png)
+![dualpipe](/training/model-parallelism/images/parallelism-pp-dualpipe.png)
 ([source](https://arxiv.org/abs/2412.19437))
 
 There are 2 groups of PP solutions - the traditional Pipeline API and the more modern solutions that make things much easier for the end user by helping to partially or fully automate the process:
@@ -317,16 +317,16 @@ The main building block of any transformer is a fully connected `nn.Linear` foll
 Following the Megatron's paper notation, we can write the dot-product part of it as `Y = GeLU(XA)`, where `X` and `Y` are the input and output vectors, and `A` is the weight matrix.
 
 If we look at the computation in matrix form, it's easy to see how the matrix multiplication can be split between multiple GPUs:
-![Parallel GEMM](images/parallelism-tp-parallel_gemm.png)
+![Parallel GEMM](/training/model-parallelism/images/parallelism-tp-parallel_gemm.png)
 
 If we split the weight matrix `A` column-wise across `N` GPUs and perform matrix multiplications `XA_1` through `XA_n` in parallel, then we will end up with `N` output vectors `Y_1, Y_2, ..., Y_n` which can be fed into `GeLU` independently:
-![independent GeLU](images/parallelism-tp-independent-gelu.png)
+![independent GeLU](/training/model-parallelism/images/parallelism-tp-independent-gelu.png)
 
 Using this principle, we can update an MLP of arbitrary depth, without the need for any synchronization between GPUs until the very end, where we need to reconstruct the output vector from shards. The Megatron-LM paper authors provide a helpful illustration for that:
-![parallel shard processing](images/parallelism-tp-parallel_shard_processing.png)
+![parallel shard processing](/training/model-parallelism/images/parallelism-tp-parallel_shard_processing.png)
 
 Parallelizing the multi-headed attention layers is even simpler, since they are already inherently parallel, due to having multiple independent heads!
-![parallel self-attention](images/parallelism-tp-parallel_self_attention.png)
+![parallel self-attention](/training/model-parallelism/images/parallelism-tp-parallel_self_attention.png)
 
 Important: TP requires very fast network, and therefore since typically intra-node networks are much faster than inter-node networks it's not advisable to do TP across nodes. Practically, if a node has 4 GPUs, the highest TP degree is therefore 4. If you need a TP degree of 8, you need to use nodes that have at least 8 GPUs.
 
@@ -366,7 +366,7 @@ TP can be combined with SP in the same process group to minimize communication c
 
 The following diagram from the DeepSpeed [pipeline tutorial](https://www.deepspeed.ai/tutorials/pipeline/) demonstrates how one combines DP with PP.
 
-![dp-pp-2d](images/parallelism-zero-dp-pp.png)
+![dp-pp-2d](/training/model-parallelism/images/parallelism-zero-dp-pp.png)
 
 Here it's important to see how DP rank 0 doesn't see GPU2 and DP rank 1 doesn't see GPU3. To DP there is just GPUs 0 and 1 where it feeds data as if there were just 2 GPUs. GPU0 "secretly" offloads some of its load to GPU2 using PP. And GPU1 does the same by enlisting GPU3 to its aid.
 
@@ -387,7 +387,7 @@ Implementations:
 
 To get an even more efficient training a 3D parallelism is used where PP is combined with TP and DP. This can be seen in the following diagram.
 
-![dp-pp-tp-3d](images/parallelism-deepspeed-3d.png)
+![dp-pp-tp-3d](/training/model-parallelism/images/parallelism-deepspeed-3d.png)
 
 This diagram is from a blog post [3D parallelism: Scaling to trillion-parameter models](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/), which is a good read as well.
 
@@ -447,7 +447,7 @@ In this implementation 2 elements are sharded:
 
 During compute each sequence chunk is projected onto QKV and then gathered to the full sequence QKV on each device, computed on each device only for the subheads it owns and then gathered again into the full attention output for the MLP block.
 
-![deepspeed-ulysses sp](images/deepspeed-ulysses.png)
+![deepspeed-ulysses sp](/training/model-parallelism/images/deepspeed-ulysses.png)
 
 [source](https://github.com/deepspeedai/DeepSpeed/tree/master/blogs/deepspeed-ulysses)
 
@@ -457,7 +457,7 @@ On the diagram:
 3. Next, local QKV embeddings are gathered into global QKV through highly optimized all-to-all collectives between participating compute devices.
 4. Then the attention computation per head is performed:
 
-![math](images/deepspeed-ulysses-math.png)
+![math](/training/model-parallelism/images/deepspeed-ulysses-math.png)
 
 5. At the end another all-to-all collective transforms output context tensor of attention computation to sequence (N/P) parallel for subsequent operators (MLP MatMul, layer norm, etc.) in the remaining modules of transformer layer block.
 
@@ -514,7 +514,7 @@ PyTorch is also working on this feature and calling it Context Parallel (CP).
 
 [DISTFLASHATTN: Distributed Memory-efficient Attention for Long-context LLMs Training](https://arxiv.org/abs/2310.03294) is reported to be many times faster than Ring Self-Attention, because it load balances the KVQ per token computation between the workers while performing Sequence Parallelism.
 
-![distflashattn](images/dist-flash-attn.png)
+![distflashattn](/training/model-parallelism/images/dist-flash-attn.png)
 
 ### Related reading
 
@@ -559,7 +559,7 @@ We have 10 batches of 512 length. If we parallelize them by attribute dimension 
 
 It is similar with tensor model parallelism or naive layer-wise model parallelism.
 
-![flex-flow-soap](images/parallelism-flexflow.jpeg)
+![flex-flow-soap](/training/model-parallelism/images/parallelism-flexflow.jpeg)
 
 The significance of this framework is that it takes resources like (1) GPU/TPU/CPU vs. (2) RAM/DRAM vs. (3) fast-intra-connect/slow-inter-connect and it automatically optimizes all these  algorithmically deciding which parallelisation to use where.
 
@@ -574,7 +574,7 @@ As intra- and inter-node speeds typically have a 10x difference, it's crucial to
 
 Here is a useful tidbit: the all-reduce collective can be decomposed into two separate phases: reduce-scatter and all-gather.
 
-![all-reduce = reduce-scatter and all-gather](images/all-reduce-reduce-scatter-all-gather.png)
+![all-reduce = reduce-scatter and all-gather](/training/model-parallelism/images/all-reduce-reduce-scatter-all-gather.png)
 ([source](https://engineering.fb.com/2021/07/15/open-source/fsdp/attachment/fsdp-graph-2a/))
 
 Here is the breakdown of which collectives are used for which parallelization strategies:

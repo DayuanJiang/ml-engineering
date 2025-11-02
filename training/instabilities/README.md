@@ -2,7 +2,7 @@
 
 Sub-sections:
 
-* [Understanding Training Loss Patterns](training-loss-patterns.md) - types of spikes, divergences, grokking moments, resumes, etc.
+* [Understanding Training Loss Patterns](./training-loss-patterns.md) - types of spikes, divergences, grokking moments, resumes, etc.
 
 ## Learning from Training Logbooks
 

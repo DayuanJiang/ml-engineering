@@ -53,7 +53,7 @@ The rest of this document will compare most of the above in details and if you w
 
 As most of us rent the compute, and we never see what it looks like, here is how an 8xH100 node looks like physically (this is the GPU tray of the Dell PowerEdge XE9680 Rack Server):
 
-![nvidia-a100-spec](images/8x-H100-node-Dell-PowerEdge-XE9680.png)
+![nvidia-a100-spec](/compute/accelerator/images/8x-H100-node-Dell-PowerEdge-XE9680.png)
 
 
 ## Glossary
@@ -102,7 +102,7 @@ We will discuss both the hardware and the software aspects in various chapters o
 
 Let's use the NVIDIA A100 spec as a reference point in the following sections.
 
-![nvidia-a100-spec](images/nvidia-a100-spec.png)
+![nvidia-a100-spec](/compute/accelerator/images/nvidia-a100-spec.png)
 
 [source](https://www.nvidia.com/en-us/data-center/a100/)
 
@@ -131,7 +131,7 @@ So you can see that int8 is 2x faster than bf16 which in turn is 2x faster than 
 
 Moreover, the TFLOPs depend on the matrices size as can be seen from this table:
 
-![nvidia-a100-matmul-tflops](images/nvidia-a100-matmul-tflops.png)
+![nvidia-a100-matmul-tflops](/compute/accelerator/images/nvidia-a100-matmul-tflops.png)
 
 [source](https://developer.nvidia.com/blog/cuda-11-features-revealed/)
 
@@ -280,7 +280,7 @@ If you find solid reports (papers?) showing the actual TFLOPS one can expect fro
 
 To provide a numerical sense to what I'm talking about let's take an A100 with its 312 TFLOPS bf16 peak performance in the specs of this card. Until the invention of FlashAttention it was known that 150TFLOPS was close to the highest one could get for fp16/bf16 mixed precision training regime. And with FlashAttention it's around 180+TFLOPS. This is, of course, measured for training LLMs where the network and IO are involved which create additional overheads. So here the maximum achievable peak performance probably lays somewhere between 200 and 300 TFLOPS.
 
-You could measure the the actual achievable peak TFLOPS by doing a perfectly aligned max-size matrices `matmul` measured on a single accelerator. You can use [Maximum Achievable Matmul FLOPS Finder](benchmarks#maximum-achievable-matmul-flops-finder) to reproduce the results. But, of course, this will only tell you how well your given accelerator and its software stack do `matmul` - depending on the workload this might be all you need to know, or not.
+You could measure the the actual achievable peak TFLOPS by doing a perfectly aligned max-size matrices `matmul` measured on a single accelerator. You can use [Maximum Achievable Matmul FLOPS Finder](/compute/accelerator/benchmarks#maximum-achievable-matmul-flops-finder) to reproduce the results. But, of course, this will only tell you how well your given accelerator and its software stack do `matmul` - depending on the workload this might be all you need to know, or not.
 
 MAMF stands for [Maximum Achievable Matmul FLOPS](#maximum-achievable-matmul-flops-comparison-table), which is a term coined by yours truly. It is very practical for those who do performance optimization work.
 
@@ -321,7 +321,7 @@ The following measurements are for `matmul` with BF16 and FP8 inputs (no sparsit
 |                  |        |        |            |                   |                                |                          |
 
 
-Caveat emptor: these numbers were achieved by a brute-force search of a non-exhaustive sub-space of various shapes performing `matmul`. See:  [Maximum Achievable Matmul TFLOPS Finder](benchmarks#maximum-achievable-matmul-flops-finder) using the software components available at the time of taking the measurement, so I highly recommend you re-run `mamf-finder.py` on your particular setup to get the true to your setup numbers. The numbers in this table are a rough estimation and shouldn't be used as absolute. As the software improves these numbers will improve coming closer to the theoretical spec. So ideally they ought to be re-run every 6 months or so.
+Caveat emptor: these numbers were achieved by a brute-force search of a non-exhaustive sub-space of various shapes performing `matmul`. See:  [Maximum Achievable Matmul TFLOPS Finder](/compute/accelerator/benchmarks#maximum-achievable-matmul-flops-finder) using the software components available at the time of taking the measurement, so I highly recommend you re-run `mamf-finder.py` on your particular setup to get the true to your setup numbers. The numbers in this table are a rough estimation and shouldn't be used as absolute. As the software improves these numbers will improve coming closer to the theoretical spec. So ideally they ought to be re-run every 6 months or so.
 
 Notes:
 - For the full set of theoretical ones see [Theoretical accelerator TFLOPS](#tflops-comparison-table)
@@ -340,7 +340,7 @@ And to conclude this section I'd like to repeat again that **the intention here 
 
 update: this new metric is starting to catch on. AMD published this graph and [explanations of why the efficiency of accelerators is going down as they get faster](https://rocm.blogs.amd.com/software-tools-optimization/Understanding_Peak_and_Max-Achievable_FLOPS/README.html):
 
-![maf-nvidia-amd-efficiency.png](images/maf-nvidia-amd-efficiency.png)
+![maf-nvidia-amd-efficiency.png](/compute/accelerator/images/maf-nvidia-amd-efficiency.png)
 
 [source](https://rocm.blogs.amd.com/software-tools-optimization/Understanding_Peak_and_Max-Achievable_FLOPS/README.html)
 

@@ -16,14 +16,14 @@ Let's look at some good, bad and unusual patterns.
 
 Prior to starting BLOOM-176B training we did multiple experiments with the [104B model](https://github.com/bigscience-workshop/bigscience/tree/master/train/tr8-104B-wide). We failed to figure out how to not diverge very early on.
 
-![](images/pre-bloom-104B-en-fail.png)
+![](/training/instabilities/images/pre-bloom-104B-en-fail.png)
 
 As you can see many attempts were made, many techniques were applied (see [chronicles](https://github.com/bigscience-workshop/bigscience/blob/master/train/tr8-104B-wide/chronicles.md). We think the 2 main obstacles were using fp16 and data that had a lot of garbage in it. For BLOOM-176B we switched to bf16, used much cleaner data and also added an embedding layer-norm and that made all the difference.
 
 
 ### An almost perfect training
 
-![](images/bloom-176B-success.png)
+![](/training/instabilities/images/bloom-176B-success.png)
 
 The [BLOOM-176B](https://github.com/bigscience-workshop/bigscience/tree/master/train/tr11-176B-ml) training had a close to perfect training loss trajectory, with a single spike that has recovered in 200 steps.
 
@@ -36,7 +36,7 @@ This was the almost perfect training indeed. Lots of hard work was put into achi
 
 Recently I was doing some performance testing and run a tiny global batch size of 8 on 8x A100 nodes on llama-2-7b trained from scratch. (w/ Deepspeed ZeRO-3 DP using HF Transformers [Llama](https://github.com/huggingface/transformers/tree/main/src/transformers/models/llama) implementation)
 
-![](images/llama-7b-grokking-no-zoom.png)
+![](/training/instabilities/images/llama-7b-grokking-no-zoom.png)
 
 Here one can observe a rapid loss improvement from 4 to 2.5 in just 480 samples after a very steady much slower improvements. My colleague [Gautam Mittal](https://github.com/gmittal) called it the [grokking](https://en.wikipedia.org/wiki/Grok) moment. In just a handful of steps the model suddenly generalized to much better predict the masked tokens.
 
@@ -44,7 +44,7 @@ Normally one doesn't see such a dramatic improvement when using a much larger ba
 
 If we zoom in it took about 60 8-sample per iteration steps:
 
-![](images/llama-7b-grokking.png)
+![](/training/instabilities/images/llama-7b-grokking.png)
 
 
 
@@ -68,7 +68,7 @@ Loss spikes can happen often and as long as they quickly bounce back to where th
 
 Here is an example of [the 13B pre-BLOOM training experiment](https://github.com/bigscience-workshop/bigscience/tree/master/train/tr1-13B-base):
 
-![](images/pre-bloom-tr1-13B-glitch-1-2.png)
+![](/training/instabilities/images/pre-bloom-tr1-13B-glitch-1-2.png)
 
 As you can see there are many spikes, some of a huge magnitude but they have all quickly recovered.
 
@@ -77,7 +77,7 @@ As you can see there are many spikes, some of a huge magnitude but they have all
 
 Here is a slow recovering spike from the [IDEFICS-80B](https://github.com/huggingface/m4-logs/blob/master/tr-190-80b/chronicles.md) training:
 
-![](images/idefics-80b-tr-190-01-spike-recover-2023-05-30.png)
+![](/training/instabilities/images/idefics-80b-tr-190-01-spike-recover-2023-05-30.png)
 
 
 
@@ -86,22 +86,22 @@ Here is a slow recovering spike from the [IDEFICS-80B](https://github.com/huggin
 
 This [104B model attempt](https://github.com/bigscience-workshop/bigscience/tree/master/train/tr8-104B-wide) spiked, started recovering but decided to not recover fully and instead started diverging
 
-![](images/pre-bloom-tr8-104B-glitch-1.png)
+![](/training/instabilities/images/pre-bloom-tr8-104B-glitch-1.png)
 
 Here is another example from the [IDEFICS-80B](https://github.com/huggingface/m4-logs/blob/master/tr-190-80b/chronicles.md) training:
 
-![](images/idefics-80b-tr-190-01-spike-2023-05-27.png)
+![](/training/instabilities/images/idefics-80b-tr-190-01-spike-2023-05-27.png)
 
 
 ### Non-spike diverging
 
 Here are a few examples of diverging that didn't go through a spike
 
-![](images/pre-bloom-tr8-104B-glitch-5.png)
+![](/training/instabilities/images/pre-bloom-tr8-104B-glitch-5.png)
 
 and here are a few more:
 
-![](images/pre-bloom-tr8-104B-glitch-7-10.png)
+![](/training/instabilities/images/pre-bloom-tr8-104B-glitch-7-10.png)
 
 as you can see each restart makes a bit of progress and then the model diverges.
 
@@ -112,7 +112,7 @@ All these are from the [104B model attempts](https://github.com/bigscience-works
 
 During the [IDEFICS-80B](https://github.com/huggingface/m4-logs/blob/master/tr-190-80b/chronicles.md) training we were using 2 different dataset types mixed together:
 
-![](images/idefics-80b-tr-190-01-losses-2023-06-04.png)
+![](/training/instabilities/images/idefics-80b-tr-190-01-losses-2023-06-04.png)
 
 Legend: cm4 (high), average (mid) and pmd (low)
 
@@ -132,7 +132,7 @@ The most complicated challenge of resume is restoring various RNGs, getting to t
 
 During [IDEFICS-80B](https://github.com/huggingface/m4-logs/blob/master/tr-190-80b/chronicles.md) training we had a very complicated DataLoader which was suffering from image to text ratio fluctuations when the DataLoader was getting restored on resume, so we ended up having a small spike on each resume which would then recover:
 
-![](images/idefics-80b-tr-190-01-image2text.png)
+![](/training/instabilities/images/idefics-80b-tr-190-01-image2text.png)
 
 You can see the loss and ratio plots correlation here. As we had to resume about a dozen times we saw a lot of those spikes.
 
@@ -144,17 +144,17 @@ You can see the loss and ratio plots correlation here. As we had to resume about
 
 I was training a variation of Llama2 and saw this super unusual spike that didn't diverge or recover but which switched to a new higher loss level:
 
-![](images/ptl-repeat-data-p1.png)
+![](/training/instabilities/images/ptl-repeat-data-p1.png)
 
 I rolled back to just before the weird behavior occurred and restarted. The loss training progressed at the same loss level for a bit and then again spiked and shifted to a higher loss.
 
-![](images/ptl-repeat-data-p2.png)
+![](/training/instabilities/images/ptl-repeat-data-p2.png)
 
 I have never seen this type of divergence before. I was scratching my head for a while and then decided to look at the bigger picture.
 
 As of this writing [Wandb](https://wandb.ai/) doesn't handle resume data plotting correctly if a rollback was performed, that is it ignores all new data after the rollback until the steps of the old data have been overcome. This forces us to start a new wandb plot for every resume with a rollback so that new data is shown. And if you needs to see the whole plot you have to stitch them and which includes dead data points that are no longer true. So I did the stitching and saw this puzzle:
 
-![](images/ptl-repeat-data-p3.png)
+![](/training/instabilities/images/ptl-repeat-data-p3.png)
 
 There was no real spike in the two earlier runs. The loss never went up in the first place. In both resumes it was under-reporting loss due to an exactly repeated data and then it reached data it hasn't seen before and started reporting correctly. In other words it was overfitting and reporting a false loss.
 

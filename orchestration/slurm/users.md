@@ -678,7 +678,7 @@ LAUNCHER="python -u -m torch.distributed.run \
     "
 ```
 
-See [Single and Multi-node Launchers with SLURM](launchers/) for complete working examples.
+See [Single and Multi-node Launchers with SLURM](/orchestration/slurm/launchers/) for complete working examples.
 
 
 ### Mismatching nodes number
@@ -1011,8 +1011,8 @@ $ mkdir -p $WORK/cron/cron.hourly
 ```
 
 Now copy these two slurm script in `$WORK/cron/scheduler`:
-- [cron-daily.slurm](cron-daily.slurm)
-- [cron-hourly.slurm](cron-hourly.slurm)
+- [cron-daily.slurm](./cron-daily.slurm)
+- [cron-hourly.slurm](./cron-hourly.slurm)
 
 after editing those to fit your specific environment's account and partition information.
 

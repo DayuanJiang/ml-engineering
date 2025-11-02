@@ -1,3 +1,3 @@
 # Network Benchmarks Results
 
-- [Disabling NVLink](disable-nvlink.md)
+- [Disabling NVLink](./disable-nvlink.md)

@@ -13,11 +13,11 @@ Floating point formats:
 
 For visual comparison refer to this representations:
 
-![fp32-tf32-fp16-bf16](images/fp32-tf32-fp16-bf16.png)
+![fp32-tf32-fp16-bf16](/training/images/fp32-tf32-fp16-bf16.png)
 
 ([source](https://developer.nvidia.com/blog/accelerating-ai-training-with-tf32-tensor-cores/))
 
-![fp16-bf16-fp8](images/fp16-bf16-fp8.png)
+![fp16-bf16-fp8](/training/images/fp16-bf16-fp8.png)
 
 ([source](https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/examples/fp8_primer.html))
 
@@ -55,7 +55,7 @@ Originally ML was using fp32, but it was very slow.
 
 Next [mixed-precision was invented using a combination of fp16 and fp32](https://developer.nvidia.com/blog/video-mixed-precision-techniques-tensor-cores-deep-learning/) was invented which tremendously sped up the training speed.
 
-![fp32/fp16 mixed precision](images/mixed-precision-fp16.png)
+![fp32/fp16 mixed precision](/training/images/mixed-precision-fp16.png)
 
 ([source](https://developer.nvidia.com/blog/video-mixed-precision-techniques-tensor-cores-deep-learning/))
 

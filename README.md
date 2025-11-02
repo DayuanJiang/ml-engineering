@@ -22,41 +22,41 @@ I've been compiling this information mostly for myself so that I could quickly f
 
 **Part 2. Hardware**
 
-1. **[Compute](compute/)** - accelerators, CPUs, CPU memory.
+1. **[Compute](/compute/)** - accelerators, CPUs, CPU memory.
 
-1. **[Storage](storage/)** - local, distributed and shared file systems.
+1. **[Storage](/storage/)** - local, distributed and shared file systems.
 
-1. **[Network](network/)** - intra- and inter-node networking.
+1. **[Network](/network/)** - intra- and inter-node networking.
 
 
 **Part 3. Orchestration**
 
-1. **[Orchestration Systems](orchestration/)** - managing containers and resources
-1. **[SLURM](orchestration/slurm/)** - Simple Linux Utility for Resource Management
+1. **[Orchestration Systems](/orchestration/)** - managing containers and resources
+1. **[SLURM](/orchestration/slurm/)** - Simple Linux Utility for Resource Management
 
 
 **Part 4. Training**
 
-1. **[Training](training/)** - model training-related guides
+1. **[Training](/training/)** - model training-related guides
 
 
 **Part 5. Inference**
 
-1. **[Inference](inference/)** - model inference insights
+1. **[Inference](/inference/)** - model inference insights
 
 
 **Part 6. Development**
 
-1. **[Debugging and Troubleshooting](debug/)** - how to debug easy and difficult issues
+1. **[Debugging and Troubleshooting](/debug/)** - how to debug easy and difficult issues
 
 1. **[And more debugging](https://github.com/stas00/the-art-of-debugging)**
 
-1. **[Testing](testing/)** - numerous tips and tools to make test writing enjoyable
+1. **[Testing](/testing/)** - numerous tips and tools to make test writing enjoyable
 
 
 **Part 7. Miscellaneous**
 
-1. **[Resources](resources/)** - LLM/VLM chronicles
+1. **[Resources](/resources/)** - LLM/VLM chronicles
 
 
 ## Updates
@@ -67,7 +67,7 @@ I announce any significant updates on my twitter channel [https://twitter.com/St
 
 Download the [PDF](https://huggingface.co/stas/ml-engineering-book/resolve/main/Stas%20Bekman%20-%20Machine%20Learning%20Engineering.pdf?download=true) version of the book.
 
-I will try to rebuild it once in a few weeks or so, but if you want the latest pdf, the instructions for building are [here](build/).
+I will try to rebuild it once in a few weeks or so, but if you want the latest pdf, the instructions for building are [here](/build/).
 
 Thanks to HuggingFace for giving me permission to host my book's PDF at the [HF hub](https://huggingface.co/stas/ml-engineering-book).
 
@@ -79,13 +79,13 @@ If you want to discuss something related to ML engineering this repo has the [co
 
 High end accelerators:
 
-- [Theoretical accelerator TFLOPS](compute/accelerator/#tflops-comparison-table)
-- [Accelerator memory size and speed](compute/accelerator/#accelerator-memory-size-and-speed)
+- [Theoretical accelerator TFLOPS](/compute/accelerator/#tflops-comparison-table)
+- [Accelerator memory size and speed](/compute/accelerator/#accelerator-memory-size-and-speed)
 
 Networks:
 
-- [Theoretical inter-node speed](network/#inter-node-networking)
-- [Theoretical intra-node speed](network/#intra-node-networking)
+- [Theoretical inter-node speed](/network/#inter-node-networking)
+- [Theoretical intra-node speed](/network/#intra-node-networking)
 
 ## Shortcuts
 
@@ -93,16 +93,16 @@ Things that you are likely to need to find quickly and often.
 
 Tools:
 
-- [all_reduce_bench.py](network/benchmarks/all_reduce_bench.py) - a much easier way to benchmark network throughput than nccl-tests.
-- [torch-distributed-gpu-test.py](debug/torch-distributed-gpu-test.py) - a tool to quickly test your inter-node connectivity
-- [mamf-finder.py](compute/accelerator/benchmarks/mamf-finder.py) - what is the actual TFLOPS measurement you can get from your accelerator.
+- [all_reduce_bench.py](/network/benchmarks/all_reduce_bench.py) - a much easier way to benchmark network throughput than nccl-tests.
+- [torch-distributed-gpu-test.py](/debug/torch-distributed-gpu-test.py) - a tool to quickly test your inter-node connectivity
+- [mamf-finder.py](/compute/accelerator/benchmarks/mamf-finder.py) - what is the actual TFLOPS measurement you can get from your accelerator.
 
 Guides:
 
-- [debugging pytorch applications](debug/pytorch.md) - quick copy-n-paste solutions to resolve hanging or breaking pytorch applications
-- [slurm for users](orchestration/slurm/users.md) - a slurm cheatsheet and tricks
-- [make tiny models/datasets/tokenizers](debug/make-tiny-models-tokenizers-datasets.md)
-- [LLM/VLM chronicles collection](resources/#publicly-available-training-llmvlm-logbooks)
+- [debugging pytorch applications](/debug/pytorch.md) - quick copy-n-paste solutions to resolve hanging or breaking pytorch applications
+- [slurm for users](/orchestration/slurm/users.md) - a slurm cheatsheet and tricks
+- [make tiny models/datasets/tokenizers](/debug/make-tiny-models-tokenizers-datasets.md)
+- [LLM/VLM chronicles collection](/resources/#publicly-available-training-llmvlm-logbooks)
 
 
 ## Gratitude
@@ -113,7 +113,7 @@ Special thanks go to [Thom Wolf](https://github.com/thomwolf) who proposed that 
 
 Recently, I continued expanding my knowledge and experience while training models and building scalable training/inference systems at [Contextual.AI](https://contextual.ai/) and I'm grateful for that opportunity to Aman and Douwe.
 
-I'd also like to thank the numerous [contributors](contributors.md) who have been making this text awesome and error-free.
+I'd also like to thank the numerous [contributors](/contributors.md) who have been making this text awesome and error-free.
 
 ## Contributing
 

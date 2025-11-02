@@ -16,7 +16,7 @@ Often you don't need to be a network engineer to figure out networking issues. S
 
 This section is definitely non-exhaustive and is meant to cover some of the most common setup issues that I have often encountered. For more complex problems please research the [NCCL repo Issues](https://github.com/NVIDIA/nccl/issues) or file a new Issue if you can't find one matching your situation. NCCL also includes a brief [troubleshooting section](https://docs.nvidia.com/deeplearning/nccl/archives/nccl_2183/user-guide/docs/troubleshooting.html) but usually one learns a lot more from reading [Issues](https://github.com/NVIDIA/nccl/issues).
 
-For the network diagnostics work, instead of using a full application which may take a long time to launch and have unrelated issue, I recommend using this specially developed design test script:  [torch-distributed-gpu-test.py](../../debug/torch-distributed-gpu-test.py).
+For the network diagnostics work, instead of using a full application which may take a long time to launch and have unrelated issue, I recommend using this specially developed design test script:  [torch-distributed-gpu-test.py](/debug/torch-distributed-gpu-test.py).
 
 First, run the nccl-based program after setting:
 
@@ -31,7 +31,7 @@ For example if you're using the aforementioned debug script, for a single node w
 NCCL_DEBUG=INFO python -m torch.distributed.run --nproc_per_node 8 --nnodes 1 torch-distributed-gpu-test.py
 ```
 
-To launch it on multiple nodes, you'd have to either use some orchestration software like SLURM or Kubernetes, or manually launch it on each node (`pdsh` would be of a huge help) - see the instructions inside [torch-distributed-gpu-test.py](../../debug/torch-distributed-gpu-test.py) for details. But to understand how things work I recommend starting with just 1 node and then progressing to 2, and later to more nodes.
+To launch it on multiple nodes, you'd have to either use some orchestration software like SLURM or Kubernetes, or manually launch it on each node (`pdsh` would be of a huge help) - see the instructions inside [torch-distributed-gpu-test.py](/debug/torch-distributed-gpu-test.py) for details. But to understand how things work I recommend starting with just 1 node and then progressing to 2, and later to more nodes.
 
 Now, inspect the output of the program and look for a line that starts with:
 ```

@@ -693,7 +693,7 @@ For example, see this [discussion](https://github.com/deepspeedai/DeepSpeed/issu
 
 It's uncommon that small variations make much of a difference, but sometimes the difference can be clearly seen, as in this example where the same image is produced on a CPU and an MPS device.
 
-![](images/math-fp-discrepancy-outcome-lizard.png)
+![](/debug/images/math-fp-discrepancy-outcome-lizard.png)
 
 This snapshot and the commentary come from this [PyTorch Issue thread](https://github.com/pytorch/pytorch/issues/84936#issuecomment-1246084645).
 

@@ -7,7 +7,7 @@ The Slurm Workload Manager. It is a free and open-source job scheduler for Linux
 
 These chapters will not try to exhaustively teach you SLURM as there are many manuals out there, but will cover some specific nuances that are useful to help in the training process.
 
-- [SLURM For Users](./users.md) - everything you need to know to do your training in the SLURM environment.
-- [SLURM Administration](./admin.md) - if you're unlucky to need to also manage the SLURM cluster besides using it, there is a growing list of recipes in this document to get things done faster for you.
-- [Performance](./performance.md) - SLURM performance nuances.
-- [Launcher scripts](./launchers/) - how to launch with `torchrun`, `accelerate`, pytorch-lightning, etc. in the SLURM environment
+- [SLURM For Users](/orchestration/slurm/users.md) - everything you need to know to do your training in the SLURM environment.
+- [SLURM Administration](/orchestration/slurm/admin.md) - if you're unlucky to need to also manage the SLURM cluster besides using it, there is a growing list of recipes in this document to get things done faster for you.
+- [Performance](/orchestration/slurm/performance.md) - SLURM performance nuances.
+- [Launcher scripts](/orchestration/slurm/launchers/) - how to launch with `torchrun`, `accelerate`, pytorch-lightning, etc. in the SLURM environment

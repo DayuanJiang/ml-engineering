@@ -4,7 +4,7 @@ While the methodologies found in this article were developed while working with 
 
 ## Helper tools
 
-Try to use the following script [torch-distributed-gpu-test.py](torch-distributed-gpu-test.py) to diagnose the situation.
+Try to use the following script [torch-distributed-gpu-test.py](./torch-distributed-gpu-test.py) to diagnose the situation.
 
 This will help primarily with discovering network-related issues. And also to quickly understand how multi-gpu communications work.
 
@@ -474,7 +474,7 @@ gcore <pid>
 kill -ABRT <pid>
 ```
 
-and then you can introspect the core file as explained [here](pytorch.md#segfaults-and-getting-a-backtrace-from-a-core-file).
+and then you can introspect the core file as explained [here](./pytorch.md#segfaults-and-getting-a-backtrace-from-a-core-file).
 
 If you don't get the core file dumped you need to configure your system to allow so and also specify where the core files should be saved to.
 
