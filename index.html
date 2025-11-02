@@ -8,120 +8,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
   <!-- Theme -->
-  <link id="docsify-theme" rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
 
   <style>
     .sidebar {
       padding-top: 6px;
     }
+
     .app-name-link img {
       width: 80%;
     }
 
-    /* Theme switcher button */
-    .theme-switcher {
-      position: fixed;
-      top: 20px;
-      right: 80px;
-      z-index: 1000;
-      padding: 8px 12px;
-      background: #42b983;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      transition: opacity 0.3s, visibility 0.3s;
-    }
-
-    .theme-switcher:hover {
-      background: #33a06f;
-    }
-
-    .theme-switcher.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .theme-menu {
-      position: fixed;
-      top: 60px;
-      right: 80px;
-      z-index: 1000;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-      display: none;
-      min-width: 150px;
-    }
-
-    .theme-menu.active {
-      display: block;
-    }
-
-    .theme-option {
-      padding: 10px 15px;
-      cursor: pointer;
-      border-bottom: 1px solid #eee;
-    }
-
-    .theme-option:last-child {
-      border-bottom: none;
-    }
-
-    .theme-option:hover {
-      background: #f5f5f5;
-    }
-
-    .theme-option.selected {
-      background: #e8f5e9;
-      font-weight: bold;
-    }
-
     /* Mobile responsive */
     @media screen and (max-width: 768px) {
-      * {
-        max-width: 100vw !important;
-        box-sizing: border-box !important;
-      }
-
       html, body {
         margin: 0 !important;
         padding: 0 !important;
         overflow-x: hidden !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
       }
 
       .markdown-section {
         margin: 0 !important;
         padding-left: 15px !important;
         padding-right: 15px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
       }
 
       .content, main, .sidebar {
         margin: 0 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
-      }
-
-      .theme-switcher {
-        right: 20px !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Theme switcher button -->
-  <button class="theme-switcher" id="themeSwitcher">Theme</button>
-  <div class="theme-menu" id="themeMenu">
-    <div class="theme-option" data-theme="dolphin">Dolphin</div>
-    <div class="theme-option" data-theme="vue">Vue</div>
-    <div class="theme-option" data-theme="buble">Buble</div>
-    <div class="theme-option" data-theme="dark">Dark</div>
-    <div class="theme-option" data-theme="pure">Pure</div>
-  </div>
-
   <div id="app">Loading...</div>
 
   <script>
@@ -196,88 +122,23 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/external-script.min.js"></script>
 
   <script>
-    (function() {
-      var themeSwitcher = document.getElementById('themeSwitcher');
-      var themeMenu = document.getElementById('themeMenu');
-      var themeOptions = document.querySelectorAll('.theme-option');
-      var themeLink = document.getElementById('docsify-theme');
+    // Add scroll to top button
+    window.addEventListener('load', function() {
+      var scrollBtn = document.createElement('button');
+      scrollBtn.innerHTML = '↑';
+      scrollBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999;padding:10px 15px;background:#42b983;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:none;';
+      document.body.appendChild(scrollBtn);
 
-      var themes = {
-        'dolphin': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dolphin.css',
-        'vue': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css',
-        'buble': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/buble.css',
-        'dark': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css',
-        'pure': '//cdn.jsdelivr.net/npm/docsify@4/lib/themes/pure.css'
-      };
-
-      // Load saved theme or default to vue
-      var savedTheme = localStorage.getItem('docsify-theme') || 'vue';
-      setTheme(savedTheme);
-
-      // Toggle theme menu
-      themeSwitcher.addEventListener('click', function(e) {
-        e.stopPropagation();
-        themeMenu.classList.toggle('active');
+      scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // Close menu when clicking outside
-      document.addEventListener('click', function() {
-        themeMenu.classList.remove('active');
-      });
-
-      // Prevent menu from closing when clicking inside
-      themeMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-      });
-
-      // Handle theme selection
-      themeOptions.forEach(function(option) {
-        option.addEventListener('click', function() {
-          var theme = this.getAttribute('data-theme');
-          setTheme(theme);
-          localStorage.setItem('docsify-theme', theme);
-          themeMenu.classList.remove('active');
-        });
-      });
-
-      function setTheme(theme) {
-        themeLink.href = themes[theme];
-        themeOptions.forEach(function(option) {
-          option.classList.remove('selected');
-          if (option.getAttribute('data-theme') === theme) {
-            option.classList.add('selected');
-          }
-        });
-      }
-
-      // Add scroll to top button
-      window.addEventListener('load', function() {
-        var scrollBtn = document.createElement('button');
-        scrollBtn.innerHTML = '↑';
-        scrollBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999;padding:10px 15px;background:#42b983;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:none;';
-        document.body.appendChild(scrollBtn);
-
-        scrollBtn.addEventListener('click', function() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Combined scroll handler for both buttons
-        window.addEventListener('scroll', function() {
-          var scrollY = window.pageYOffset;
-
-          // Show/hide scroll to top button
-          scrollBtn.style.display = scrollY > 300 ? 'block' : 'none';
-
-          // Show/hide theme switcher
-          if (scrollY > 100) {
-            themeSwitcher.classList.add('hidden');
-            themeMenu.classList.remove('active');
-          } else {
-            themeSwitcher.classList.remove('hidden');
-          }
-        });
-      });
-    })();
+      // Show/hide scroll to top button on scroll
+      window.addEventListener('scroll', function() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        scrollBtn.style.display = scrollY > 300 ? 'block' : 'none';
+      }, { passive: true });
+    });
   </script>
 </body>
 </html>
