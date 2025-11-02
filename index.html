@@ -79,6 +79,36 @@
       background: #e8f5e9;
       font-weight: bold;
     }
+
+    /* Mobile responsive */
+    @media screen and (max-width: 768px) {
+      * {
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+      }
+
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+      }
+
+      .markdown-section {
+        margin: 0 !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+
+      .content, main, .sidebar {
+        margin: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      .theme-switcher {
+        right: 20px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -166,40 +196,8 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/external-script.min.js"></script>
 
   <script>
-    // Add scroll to top button
-    window.addEventListener('load', function() {
-      var btn = document.createElement('button');
-      btn.innerHTML = '↑';
-      btn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999;padding:10px 15px;background:#42b983;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:none;';
-      document.body.appendChild(btn);
-
-      window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-          btn.style.display = 'block';
-        } else {
-          btn.style.display = 'none';
-        }
-      });
-
-      btn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    });
-
-    // Hide/show theme button on scroll
-    var themeSwitcher = document.getElementById('themeSwitcher');
-    var themeMenuScroll = document.getElementById('themeMenu');
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 100) {
-        themeSwitcher.classList.add('hidden');
-        themeMenuScroll.classList.remove('active');
-      } else {
-        themeSwitcher.classList.remove('hidden');
-      }
-    });
-
-    // Theme switcher functionality
     (function() {
+      var themeSwitcher = document.getElementById('themeSwitcher');
       var themeMenu = document.getElementById('themeMenu');
       var themeOptions = document.querySelectorAll('.theme-option');
       var themeLink = document.getElementById('docsify-theme');
@@ -244,8 +242,6 @@
 
       function setTheme(theme) {
         themeLink.href = themes[theme];
-
-        // Update selected state
         themeOptions.forEach(function(option) {
           option.classList.remove('selected');
           if (option.getAttribute('data-theme') === theme) {
@@ -253,6 +249,34 @@
           }
         });
       }
+
+      // Add scroll to top button
+      window.addEventListener('load', function() {
+        var scrollBtn = document.createElement('button');
+        scrollBtn.innerHTML = '↑';
+        scrollBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999;padding:10px 15px;background:#42b983;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:none;';
+        document.body.appendChild(scrollBtn);
+
+        scrollBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Combined scroll handler for both buttons
+        window.addEventListener('scroll', function() {
+          var scrollY = window.pageYOffset;
+
+          // Show/hide scroll to top button
+          scrollBtn.style.display = scrollY > 300 ? 'block' : 'none';
+
+          // Show/hide theme switcher
+          if (scrollY > 100) {
+            themeSwitcher.classList.add('hidden');
+            themeMenu.classList.remove('active');
+          } else {
+            themeSwitcher.classList.remove('hidden');
+          }
+        });
+      });
     })();
   </script>
 </body>
